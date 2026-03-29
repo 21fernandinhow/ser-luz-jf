@@ -1,0 +1,16 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Stub mínimo para prisma generate — Etapa 2 expande (campos, enums, índices) conforme docs/spec.md §3
+model Profile {
+  id String @id @db.Uuid
+
+  @@map("profiles")
+}
