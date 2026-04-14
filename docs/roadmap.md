@@ -1,0 +1,117 @@
+# Roadmap de desenvolvimento — MVP Ser Luz
+
+Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entregável.
+
+---
+
+## Estado inicial (Fase 0 — concluída)
+
+- Nuxt 3 + Tailwind + `@nuxtjs/supabase` instalados
+- `prisma/schema.prisma` (stub mínimo), `server/utils/prisma.ts`
+- `nuxt.config.ts` com redirect config; `tailwind.config.ts` com paleta de marca
+- Estrutura de pastas criada; páginas stub; `assets/logo.webp`; `public/favicon.ico`; `.env.example`
+
+---
+
+## Fase 1 — Schema e infra de servidor
+
+**Objetivo:** banco pronto e utilitários server-side completos.
+
+- [x] Expandir `prisma/schema.prisma` — enums `Role`/`ProfileStatus`, todos os campos (spec §3.2), índices `role`, `status`, `created_at`
+- [x] Rodar migration — `init_profiles` aplicada via Supabase MCP
+- [x] `server/utils/supabase-server.ts` — cliente `service_role` + helper `getAuthUser(event)`
+- [x] `server/utils/errors.ts` — `createError` padronizado `{ error: { code, message, details } }`
+- [x] `server/utils/rbac.ts` — `requireAdmin`, `requireProfile`, `assertSelfOrAdmin`
+- [x] `server/utils/validation.ts` — validações de register (beneficiário/voluntário) + patch me
+- [x] `scripts/bootstrap-admin.ts` — cria primeiro admin via `service_role`
+
+---
+
+## Fase 2 — Auth e perfil
+
+**Objetivo:** login funcional, sessão e perfil do usuário autenticado.
+
+- [ ] `server/api/profiles/me.get.ts` — retorna perfil do JWT; omite `internalNotes` se não admin
+- [ ] `server/api/profiles/me.patch.ts` — atualiza campos permitidos por role; bloqueia campos proibidos
+- [ ] `composables/useAuthRedirect.ts` — redireciona após login por role (`admin` → `/admin`, etc.)
+- [ ] `middleware/auth.global.ts` — protege `/painel/*` e `/admin/*`; trata perfil 404 (signOut)
+- [ ] `middleware/admin.ts` — verifica `role === admin` para `/admin/**`
+- [ ] `pages/login.vue` — formulário real `signInWithPassword` + redirect por role
+- [ ] `pages/confirm.vue` — callback PKCE do Supabase Auth
+- [ ] `layouts/default.vue` — header público (logo, Doar, UserMenu)
+- [ ] `components/layout/AppHeader.vue` — `<img src="/logo.webp">` + nav
+- [ ] `components/layout/UserMenu.vue` — ícone usuário, link painel/logout
+
+---
+
+## Fase 3 — Cadastro público
+
+**Objetivo:** registro de beneficiário e voluntário via API pública.
+
+- [ ] `server/api/register/beneficiary.post.ts` — Admin API cria Auth user → Prisma `profiles` (`status: pending`)
+- [ ] `server/api/register/volunteer.post.ts` — idem volunteer
+- [ ] `composables/useRegisterTab.ts` — sync `?type=beneficiary|volunteer` com aba ativa
+- [ ] `components/register/RegisterBeneficiaryForm.vue` — HTML5 + todos os campos (spec §6.2)
+- [ ] `components/register/RegisterVolunteerForm.vue` — HTML5 + campos disponibilidade/skills
+- [ ] `pages/register.vue` — tabs + composable + exibe `fieldErrors` da API
+
+---
+
+## Fase 4 — Painéis (beneficiário/voluntário)
+
+**Objetivo:** usuário vê e edita sua ficha; vê badge de status.
+
+- [ ] `components/auth/StatusBadge.vue` — `pending|approved|rejected` → texto PT + cor
+- [ ] `layouts/panel.vue` — header simplificado com contexto de painel
+- [ ] `pages/painel/beneficiary.vue` — carrega `GET /api/profiles/me`, submete `PATCH`, exibe status
+- [ ] `pages/painel/volunteer.vue` — idem para voluntário
+
+---
+
+## Fase 5 — Admin
+
+**Objetivo:** admin lista, filtra, aprova/rejeita, edita e apaga usuários.
+
+- [ ] `server/api/admin/beneficiaries.get.ts` — lista `role=beneficiary`, query `?status=`
+- [ ] `server/api/admin/volunteers.get.ts` — idem volunteer
+- [ ] `server/api/admin/users/[id].get.ts` — detalhe completo incl. `internalNotes`
+- [ ] `server/api/admin/users/[id].patch.ts` — atualização ampla por admin
+- [ ] `server/api/admin/users/[id]/status.patch.ts` — `{ status: approved|rejected }` idempotente
+- [ ] `server/api/admin/users/[id].delete.ts` — Prisma delete + Supabase Auth `deleteUser`
+- [ ] `layouts/admin.vue` — nav lateral/top entre beneficiários e voluntários
+- [ ] `pages/admin/index.vue` — dashboard com contadores e links
+- [ ] `pages/admin/beneficiaries.vue` — tabela + filtro por status
+- [ ] `pages/admin/volunteers.vue` — idem
+- [ ] `pages/admin/users/[id].vue` — detalhe + edição + ação de status + delete com confirmação
+- [ ] `components/admin/UserTable.vue` — tabela reutilizável beneficiários/voluntários
+- [ ] `components/admin/StatusFilter.vue` — filtro por `pending|approved|rejected`
+- [ ] `components/admin/UserEditForm.vue` — formulário de edição com campos admin
+
+---
+
+## Fase 6 — Institucional e polimento
+
+**Objetivo:** home real, modal Doar, acessibilidade e segurança.
+
+- [ ] `pages/index.vue` — hero, blocos institucionais, CTAs `/register?type=...`, abre modal Doar
+- [ ] `components/layout/DonateModal.vue` — Pix/banco via `runtimeConfig` público
+- [ ] `composables/useDonateModal.ts` — `useState('donate-open')`
+- [ ] RLS no Supabase — políticas que espelham RBAC como camada extra
+- [ ] Rate limit — middleware Nitro por IP em `POST /api/register/*`
+- [ ] Revisão de copy — todas as mensagens de erro e textos de UI em português
+
+---
+
+## Fase 7 — Deploy
+
+**Objetivo:** produção no Vercel com banco Supabase real.
+
+- [ ] Vercel project — framework preset Nuxt 3; `postinstall: prisma generate`
+- [ ] Variáveis de ambiente — todas de `spec.md §12.1` configuradas no dashboard Vercel
+- [ ] `prisma migrate deploy` — rodar no CI/build apontando para Supabase produção
+- [ ] `bootstrap-admin` — executar uma vez em produção para criar o primeiro admin
+- [ ] Smoke test — cadastro → login → painel → aprovação admin → delete definitivo
+
+---
+
+*Documento derivado de `spec.md`. Ajustar nomes de arquivo e rotas ao padrão consolidado no repositório.*

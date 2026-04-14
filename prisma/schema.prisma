@@ -8,9 +8,48 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Stub mínimo para prisma generate — Etapa 2 expande (campos, enums, índices) conforme docs/spec.md §3
-model Profile {
-  id String @id @db.Uuid
+enum Role {
+  admin
+  beneficiary
+  volunteer
+}
 
+enum ProfileStatus {
+  pending
+  approved
+  rejected
+}
+
+model Profile {
+  id     String        @id @db.Uuid
+  role   Role
+  status ProfileStatus
+  email  String
+
+  internalNotes String?  @map("internal_notes")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Campos compartilhados / beneficiário / voluntário (null conforme role)
+  fullName  String? @map("full_name")
+  address   String?
+  phone     String?
+  documentId String? @map("document_id")
+
+  // Exclusivos beneficiário
+  householdSize           Int?     @map("household_size")
+  hasChildren             Boolean? @map("has_children")
+  childrenCount           Int?     @map("children_count")
+  childrenAgesDescription String?  @map("children_ages_description")
+  clothingSizes           String?  @map("clothing_sizes")
+  currentGreatestNeed     String?  @map("current_greatest_need")
+
+  // Exclusivos voluntário
+  availability String?
+  skills       String?
+
+  @@index([role])
+  @@index([status])
+  @@index([createdAt])
   @@map("profiles")
 }
