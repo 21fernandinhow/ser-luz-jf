@@ -31,16 +31,16 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 **Objetivo:** login funcional, sessão e perfil do usuário autenticado.
 
-- [ ] `server/api/profiles/me.get.ts` — retorna perfil do JWT; omite `internalNotes` se não admin
-- [ ] `server/api/profiles/me.patch.ts` — atualiza campos permitidos por role; bloqueia campos proibidos
-- [ ] `composables/useAuthRedirect.ts` — redireciona após login por role (`admin` → `/admin`, etc.)
-- [ ] `middleware/auth.global.ts` — protege `/painel/*` e `/admin/*`; trata perfil 404 (signOut)
-- [ ] `middleware/admin.ts` — verifica `role === admin` para `/admin/**`
-- [ ] `pages/login.vue` — formulário real `signInWithPassword` + redirect por role
-- [ ] `pages/confirm.vue` — callback PKCE do Supabase Auth
-- [ ] `layouts/default.vue` — header público (logo, Doar, UserMenu)
-- [ ] `components/layout/AppHeader.vue` — `<img src="/logo.webp">` + nav
-- [ ] `components/layout/UserMenu.vue` — ícone usuário, link painel/logout
+- [x] `server/api/profiles/me.get.ts` — retorna perfil do JWT; omite `internalNotes` se não admin
+- [x] `server/api/profiles/me.patch.ts` — atualiza campos permitidos por role; bloqueia campos proibidos
+- [x] `composables/useAuthRedirect.ts` — redireciona após login por role (`admin` → `/admin`, etc.)
+- [x] `middleware/auth.global.ts` — protege `/painel/*` e `/admin/*`; trata perfil 404 (signOut)
+- [x] `middleware/admin.ts` — verifica `role === admin` para `/admin/**`
+- [x] `pages/login.vue` — formulário real `signInWithPassword` + redirect por role
+- [x] `pages/confirm.vue` — callback PKCE do Supabase Auth
+- [x] `layouts/default.vue` — header público (logo, Doar, UserMenu)
+- [x] `components/layout/AppHeader.vue` — `<img src="/logo.webp">` + nav
+- [x] `components/layout/UserMenu.vue` — ícone usuário, link painel/logout
 
 ---
 
