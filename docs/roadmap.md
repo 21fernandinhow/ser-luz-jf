@@ -57,14 +57,14 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 ---
 
-## Fase 4 — Painéis (beneficiário/voluntário)
+## Fase 4 — Painéis (beneficiário/voluntário) - Concluida
 
 **Objetivo:** usuário vê e edita sua ficha; vê badge de status.
 
-- [ ] `components/auth/StatusBadge.vue` — `pending|approved|rejected` → texto PT + cor
-- [ ] `layouts/panel.vue` — header simplificado com contexto de painel
-- [ ] `pages/painel/beneficiary.vue` — carrega `GET /api/profiles/me`, submete `PATCH`, exibe status
-- [ ] `pages/painel/volunteer.vue` — idem para voluntário
+- [x] `components/auth/StatusBadge.vue` — `pending|approved|rejected` → texto PT + cor
+- [x] `layouts/panel.vue` — header simplificado com contexto de painel
+- [x] `pages/painel/beneficiary.vue` — carrega `GET /api/profiles/me`, submete `PATCH`, exibe status
+- [x] `pages/painel/volunteer.vue` — idem para voluntário
 
 ---
 
