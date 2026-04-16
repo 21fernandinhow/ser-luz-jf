@@ -13,7 +13,7 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 ---
 
-## Fase 1 — Schema e infra de servidor
+## Fase 1 — Schema e infra de servidor - Concluida
 
 **Objetivo:** banco pronto e utilitários server-side completos.
 
@@ -27,7 +27,7 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 ---
 
-## Fase 2 — Auth e perfil
+## Fase 2 — Auth e perfil - Concluida
 
 **Objetivo:** login funcional, sessão e perfil do usuário autenticado.
 
@@ -44,16 +44,16 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 ---
 
-## Fase 3 — Cadastro público
+## Fase 3 — Cadastro público - Concluida
 
 **Objetivo:** registro de beneficiário e voluntário via API pública.
 
-- [ ] `server/api/register/beneficiary.post.ts` — Admin API cria Auth user → Prisma `profiles` (`status: pending`)
-- [ ] `server/api/register/volunteer.post.ts` — idem volunteer
-- [ ] `composables/useRegisterTab.ts` — sync `?type=beneficiary|volunteer` com aba ativa
-- [ ] `components/register/RegisterBeneficiaryForm.vue` — HTML5 + todos os campos (spec §6.2)
-- [ ] `components/register/RegisterVolunteerForm.vue` — HTML5 + campos disponibilidade/skills
-- [ ] `pages/register.vue` — tabs + composable + exibe `fieldErrors` da API
+- [x] `server/api/register/beneficiary.post.ts` — Admin API cria Auth user → Prisma `profiles` (`status: pending`)
+- [x] `server/api/register/volunteer.post.ts` — idem volunteer
+- [x] `composables/useRegisterTab.ts` — sync `?type=beneficiary|volunteer` com aba ativa
+- [x] `components/register/RegisterBeneficiaryForm.vue` — HTML5 + todos os campos (spec §6.2)
+- [x] `components/register/RegisterVolunteerForm.vue` — HTML5 + campos disponibilidade/skills
+- [x] `pages/register.vue` — tabs + composable + exibe `fieldErrors` da API
 
 ---
 
