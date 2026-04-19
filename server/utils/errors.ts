@@ -6,6 +6,7 @@ type ErrorCode =
   | 'NOT_FOUND'
   | 'VALIDATION_ERROR'
   | 'CONFLICT'
+  | 'RATE_LIMIT'
   | 'INTERNAL'
 
 interface AppErrorOptions {
@@ -27,6 +28,7 @@ export function createAppError({
     NOT_FOUND: 404,
     VALIDATION_ERROR: 400,
     CONFLICT: 409,
+    RATE_LIMIT: 429,
     INTERNAL: 500,
   }
 
