@@ -124,7 +124,6 @@
         </div>
 
         <div class="space-y-16">
-          <!-- Bloco 1: imagem esquerda, texto direita -->
           <div class="flex flex-col md:flex-row gap-10 items-center">
             <div class="w-full md:w-1/2 shrink-0">
               <img src="/story-image-1.webp" alt="Projeto Ser Luz em ação" class="w-full aspect-[4/3] object-cover rounded-2xl" />
@@ -140,7 +139,6 @@
             </div>
           </div>
 
-          <!-- Bloco 2: texto esquerda, imagem direita -->
           <div class="flex flex-col md:flex-row-reverse gap-10 items-center">
             <div class="w-full md:w-1/2 shrink-0">
               <img src="/story-image-2.webp" alt="Voluntários e famílias do Projeto Ser Luz" class="w-full aspect-[4/3] object-cover rounded-2xl" />

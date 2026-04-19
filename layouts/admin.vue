@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col bg-surface-muted">
-    <header class="sticky top-0 z-30 bg-brand-blue shadow">
+    <header class="sticky top-0 z-30 bg-brand-blue">
       <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         <!-- Logo + título -->
         <div class="flex items-center gap-3 shrink-0">
