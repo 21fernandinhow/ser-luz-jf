@@ -24,19 +24,19 @@
         </p>
 
         <div class="space-y-4">
-          <div v-if="config.public.donatePixKey" class="bg-surface-muted rounded-xl p-4">
+          <div v-if="pixKey" class="bg-surface-muted rounded-xl p-4">
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Chave Pix</p>
-            <p class="font-mono text-sm text-gray-800 break-all select-all">{{ config.public.donatePixKey }}</p>
+            <p class="font-mono text-sm text-gray-800 break-all select-all">{{ pixKey }}</p>
           </div>
 
-          <div v-if="config.public.donateBankInfo" class="bg-surface-muted rounded-xl p-4">
+          <div v-if="bankInfo" class="bg-surface-muted rounded-xl p-4">
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Dados Bancários</p>
-            <p class="text-sm text-gray-800 whitespace-pre-line">{{ config.public.donateBankInfo }}</p>
+            <p class="text-sm text-gray-800 whitespace-pre-line">{{ bankInfo }}</p>
           </div>
 
           <a
-            v-if="config.public.donateExternalLink"
-            :href="config.public.donateExternalLink"
+            v-if="externalLink"
+            :href="externalLink"
             target="_blank"
             rel="noopener noreferrer"
             class="block w-full text-center bg-brand-blue text-white font-semibold py-3 rounded-xl hover:bg-brand-blue/90 transition"
@@ -45,10 +45,7 @@
           </a>
         </div>
 
-        <p
-          v-if="!config.public.donatePixKey && !config.public.donateBankInfo && !config.public.donateExternalLink"
-          class="text-sm text-gray-500 text-center"
-        >
+        <p v-if="!pixKey && !bankInfo && !externalLink" class="text-sm text-gray-500 text-center">
           Entre em contato com a ONG para obter informações sobre doações.
         </p>
 
@@ -65,5 +62,9 @@
 
 <script setup lang="ts">
 const { isOpen, close } = useDonateModal()
-const config = useRuntimeConfig()
+
+// Preencher com os dados reais da ONG (Fase 7)
+const pixKey = ''
+const bankInfo = ''
+const externalLink = ''
 </script>

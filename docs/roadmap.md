@@ -90,20 +90,32 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 ---
 
-## Fase 6 — Institucional e polimento
+## Fase 6 — Institucional e Design — Concluída
 
-**Objetivo:** home real, modal Doar, acessibilidade e segurança.
+**Objetivo:** home real, modal Doar, identidade visual consistente em todas as páginas.
 
-- [ ] `pages/index.vue` — hero, blocos institucionais, CTAs `/register?type=...`, abre modal Doar
-- [ ] `components/layout/DonateModal.vue` — Pix/banco via `runtimeConfig` público
-- [ ] `composables/useDonateModal.ts` — `useState('donate-open')`
+- [x] `pages/index.vue` — hero, "Quem somos", "Como funciona", "Como ajudar", "Nossa história" (mosaico), CTA final; CTAs `/register?type=...`; abre modal Doar
+- [x] `components/layout/DonateModal.vue` — Pix/banco via `runtimeConfig` público (`NUXT_PUBLIC_DONATE_*`); `<ClientOnly>` para evitar SSR com Teleport
+- [x] `composables/useDonateModal.ts` — `useState('donate-open')` compartilhado entre header, home e modal
+- [x] Sistema de layouts ativado — `<NuxtLayout>` em `app.vue`; `components.pathPrefix: false` em `nuxt.config.ts`; páginas públicas com `layout: 'default'`
+- [x] `components/layout/AppHeader.vue` — header azul nas páginas públicas (`/`, `/login`, `/register`), branco nas demais; botão "Entrar" inteligente por role; botão "Doar" abre modal
+- [x] Footer padronizado em todos os layouts — azul em `default.vue`, branco em `panel.vue` e `admin.vue`
+- [x] `layouts/admin.vue` — hamburguer no mobile (Dashboard / Beneficiários / Voluntários / Sair em dropdown)
+- [x] `pages/login.vue` e `pages/register.vue` — migrados para `layout: 'default'`; header e footer públicos aplicados
+
+---
+
+## Fase 7 — Polimento
+
+**Objetivo:** segurança extra, resiliência e revisão de conteúdo.
+
 - [ ] RLS no Supabase — políticas que espelham RBAC como camada extra
 - [ ] Rate limit — middleware Nitro por IP em `POST /api/register/*`
 - [ ] Revisão de copy — todas as mensagens de erro e textos de UI em português
 
 ---
 
-## Fase 7 — Deploy
+## Fase 8 — Deploy
 
 **Objetivo:** produção no Vercel com banco Supabase real.
 
@@ -112,6 +124,15 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 - [ ] `prisma migrate deploy` — rodar no CI/build apontando para Supabase produção
 - [ ] `bootstrap-admin` — executar uma vez em produção para criar o primeiro admin
 - [ ] Smoke test — cadastro → login → painel → aprovação admin → delete definitivo
+
+---
+
+## Fase 9 — Preenchimento de conteúdo
+
+**Objetivo:** substituir placeholders pelo conteúdo real da ONG (dados não sigilosos, hardcoded).
+
+- [ ] Chave Pix e dados bancários — preencher `pixKey`, `bankInfo` e/ou `externalLink` em `components/layout/DonateModal.vue`
+- [ ] Seção "Nossa história" — substituir textos lorem ipsum e divs cinzas pelos textos e imagens reais da ONG em `pages/index.vue`
 
 ---
 
