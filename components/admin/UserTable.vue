@@ -12,26 +12,31 @@
     </div>
 
     <div v-else class="overflow-x-auto">
-      <table class="w-full text-sm">
+      <table class="w-full text-sm min-w-[600px]">
         <thead>
           <tr class="border-b border-gray-200 text-left text-xs text-gray-500 font-semibold uppercase tracking-wide">
             <th class="pb-3 pr-4">Nome</th>
-            <th class="pb-3 pr-4 hidden sm:table-cell">E-mail</th>
-            <th class="pb-3 pr-4 hidden lg:table-cell">Bairro</th>
+            <th class="pb-3 pr-4">E-mail</th>
+            <th class="pb-3 pr-4">Bairro</th>
             <th class="pb-3 pr-4">Status</th>
-            <th class="pb-3 pr-4 hidden md:table-cell">Cadastro</th>
+            <th class="pb-3 pr-4">Cadastro</th>
             <th class="pb-3" />
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-          <tr v-for="user in users" :key="user.id" class="hover:bg-gray-50 transition-colors">
+          <tr
+            v-for="user in users"
+            :key="user.id"
+            class="hover:bg-gray-50 transition-colors cursor-pointer"
+            @click="navigateTo(`/admin/users/${user.id}`)"
+          >
             <td class="py-3 pr-4 font-medium text-gray-900">
               {{ user.full_name || '—' }}
             </td>
-            <td class="py-3 pr-4 text-gray-500 hidden sm:table-cell">
+            <td class="py-3 pr-4 text-gray-500">
               {{ user.email }}
             </td>
-            <td class="py-3 pr-4 text-gray-500 hidden lg:table-cell">
+            <td class="py-3 pr-4 text-gray-500">
               {{ user.neighborhood || '—' }}
             </td>
             <td class="py-3 pr-4">
@@ -46,10 +51,10 @@
                 {{ user.status === 'approved' ? 'Aprovado' : user.status === 'rejected' ? 'Reprovado' : 'Pendente' }}
               </span>
             </td>
-            <td class="py-3 pr-4 text-gray-500 hidden md:table-cell">
+            <td class="py-3 pr-4 text-gray-500">
               {{ formatDate(user.created_at) }}
             </td>
-            <td class="py-3 text-right">
+            <td class="py-3 text-right" @click.stop>
               <NuxtLink
                 :to="`/admin/users/${user.id}`"
                 class="text-brand-blue hover:underline text-xs font-medium"
