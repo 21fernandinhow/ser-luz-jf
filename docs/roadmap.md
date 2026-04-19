@@ -105,24 +105,24 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 ---
 
-## Fase 7 — Polimento
+## Fase 7 — Polimento — Concluída
 
 **Objetivo:** segurança extra, resiliência e revisão de conteúdo.
 
-- [ ] RLS no Supabase — políticas que espelham RBAC como camada extra
-- [ ] Rate limit — middleware Nitro por IP em `POST /api/register/*`
-- [ ] Revisão de copy — todas as mensagens de erro e textos de UI em português
+- [x] RLS no Supabase — políticas que espelham RBAC como camada extra
+- [x] Rate limit — middleware Nitro por IP em `POST /api/register/*`
+- [x] Revisão de copy — todas as mensagens de erro e textos de UI em português
 
 ---
 
-## Fase 8 — Deploy
+## Fase 8 — Deploy — Concluída
 
 **Objetivo:** produção no Vercel com banco Supabase real.
 
-- [ ] Vercel project — framework preset Nuxt 3; `postinstall: prisma generate`
-- [ ] Variáveis de ambiente — todas de `spec.md §12.1` configuradas no dashboard Vercel
-- [ ] `prisma migrate deploy` — rodar no CI/build apontando para Supabase produção
-- [ ] `bootstrap-admin` — executar uma vez em produção para criar o primeiro admin
+- [x] Vercel project — framework preset Nuxt 3; `postinstall: prisma generate`
+- [x] Variáveis de ambiente — todas de `spec.md §12.1` configuradas no dashboard Vercel
+- [x] `prisma migrate deploy` — schema aplicado via Supabase MCP (porta 5432 bloqueada de IPs externos; build command simplificado para `nuxt build`)
+- [x] `bootstrap-admin` — executar uma vez em produção para criar o primeiro admin
 - [ ] Smoke test — cadastro → login → painel → aprovação admin → delete definitivo
 
 ---
