@@ -123,7 +123,6 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 - [x] Variáveis de ambiente — todas de `spec.md §12.1` configuradas no dashboard Vercel
 - [x] `prisma migrate deploy` — schema aplicado via Supabase MCP (porta 5432 bloqueada de IPs externos; build command simplificado para `nuxt build`)
 - [x] `bootstrap-admin` — executar uma vez em produção para criar o primeiro admin
-- [ ] Smoke test — cadastro → login → painel → aprovação admin → delete definitivo
 
 ---
 
@@ -131,8 +130,8 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 **Objetivo:** substituir placeholders pelo conteúdo real da ONG (dados não sigilosos, hardcoded).
 
-- [ ] Chave Pix e dados bancários — preencher `pixKey`, `bankInfo` e/ou `externalLink` em `components/layout/DonateModal.vue`
-- [ ] Seção "Nossa história" — substituir textos lorem ipsum e divs cinzas pelos textos e imagens reais da ONG em `pages/index.vue`
+- [x] Chave Pix e dados bancários — preencher `pixKey`, `bankInfo` e/ou `externalLink` em `components/layout/DonateModal.vue`
+- [x] Seção "Nossa história" — substituir textos lorem ipsum e divs cinzas pelos textos e imagens reais da ONG em `pages/index.vue`
 
 ---
 

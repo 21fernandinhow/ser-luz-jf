@@ -126,29 +126,33 @@
         <div class="space-y-16">
           <!-- Bloco 1: imagem esquerda, texto direita -->
           <div class="flex flex-col md:flex-row gap-10 items-center">
-            <div class="w-full md:w-1/2 aspect-[4/3] rounded-2xl bg-gray-200 shrink-0" />
+            <div class="w-full md:w-1/2 shrink-0">
+              <img src="/story-image-1.webp" alt="Projeto Ser Luz em ação" class="w-full aspect-[4/3] object-cover rounded-2xl" />
+            </div>
             <div class="w-full md:w-1/2">
               <h3 class="text-xl font-bold text-gray-900 mb-4">O início de tudo</h3>
               <p class="text-gray-600 leading-relaxed mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                O Projeto Ser Luz nasceu há quase 10 anos com um propósito simples, mas poderoso: levar esperança onde muitas vezes ela já não existe. Ao longo dos anos, o Projeto Ser Luz transforma datas especiais em momentos inesquecíveis para crianças e famílias em situação de vulnerabilidade, por meio de ações como Páscoa Solidária, entrega de kits escolares, Dia das Crianças e Natal.
               </p>
               <p class="text-gray-600 leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Mas o que realmente move o projeto vai além das doações — é o carinho em cada gesto, o cuidado em cada detalhe e a certeza de que pequenas atitudes podem mudar histórias inteiras. Cada sorriso conquistado é uma prova de que a solidariedade ilumina caminhos.
               </p>
             </div>
           </div>
 
           <!-- Bloco 2: texto esquerda, imagem direita -->
           <div class="flex flex-col md:flex-row-reverse gap-10 items-center">
-            <div class="w-full md:w-1/2 aspect-[4/3] rounded-2xl bg-gray-200 shrink-0" />
+            <div class="w-full md:w-1/2 shrink-0">
+              <img src="/story-image-2.webp" alt="Voluntários e famílias do Projeto Ser Luz" class="w-full aspect-[4/3] object-cover rounded-2xl" />
+            </div>
             <div class="w-full md:w-1/2">
-              <h3 class="text-xl font-bold text-gray-900 mb-4">Crescimento e comunidade</h3>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">A luz que cresce</h3>
               <p class="text-gray-600 leading-relaxed mb-3">
-                Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.
+                Essa luz só cresce quando mais pessoas se unem. Seja como voluntário ou doador, você também pode fazer parte dessa transformação e levar esperança para quem mais precisa.
               </p>
-              <p class="text-gray-600 leading-relaxed">
-                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-              </p>
+              <blockquote class="border-l-4 border-brand-yellow pl-4 mt-6">
+                <p class="text-gray-700 italic leading-relaxed">"Ser luz não é sobre brilhar, mas sim sobre iluminar caminhos."</p>
+              </blockquote>
             </div>
           </div>
         </div>
