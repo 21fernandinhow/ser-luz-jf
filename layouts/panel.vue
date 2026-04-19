@@ -14,7 +14,6 @@
         </NuxtLink>
 
         <div class="flex items-center gap-3">
-          <span class="text-sm text-gray-500 hidden sm:block">Meu Painel</span>
           <button
             class="text-sm text-gray-600 hover:text-brand-blue transition-colors"
             @click="handleSignOut"
@@ -28,6 +27,9 @@
     <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
       <slot />
     </main>
+    <footer class="bg-white border-t border-gray-100 text-gray-400 text-center text-xs py-6 shrink-0">
+      © {{ new Date().getFullYear() }} Projeto Ser Luz · Todos os direitos reservados
+    </footer>
   </div>
 </template>
 

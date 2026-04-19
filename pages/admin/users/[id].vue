@@ -69,7 +69,7 @@
           </div>
 
           <div class="mt-5">
-            <AdminUserEditForm
+            <UserEditForm
               :profile="profile"
               :saving="saving"
               :field-errors="fieldErrors"

@@ -8,6 +8,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase'],
+  components: {
+    dirs: [{ path: '~/components', pathPrefix: false }],
+  },
   css: ['~/assets/css/main.css'],
   app: {
     head: {
@@ -36,5 +39,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     supabaseJwtSecret: process.env.SUPABASE_JWT_SECRET,
+    public: {
+      donatePixKey: process.env.NUXT_PUBLIC_DONATE_PIX_KEY || '',
+      donateBankInfo: process.env.NUXT_PUBLIC_DONATE_BANK_INFO || '',
+      donateExternalLink: process.env.NUXT_PUBLIC_DONATE_EXTERNAL_LINK || '',
+    },
   },
 })

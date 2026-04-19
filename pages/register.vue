@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[calc(100vh-4rem)] bg-surface-muted py-10 px-4">
+  <div class="flex-1 bg-surface-muted py-10 px-4">
     <div class="max-w-xl mx-auto">
       <!-- Cabeçalho da página -->
       <div class="text-center mb-6">
@@ -47,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({ layout: 'default' })
+
 const user = useSupabaseUser()
 const { redirectByRole } = useAuthRedirect()
 const { activeTab, setTab } = useRegisterTab()

@@ -7,13 +7,13 @@
       </div>
 
       <div class="mb-5">
-        <AdminStatusFilter v-model="statusFilter" />
+        <StatusFilter v-model="statusFilter" />
       </div>
 
       <div v-if="loadError" class="error-banner mb-4">{{ loadError }}</div>
 
       <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <AdminUserTable :users="users" :loading="loading" />
+        <UserTable :users="users" :loading="loading" />
       </div>
     </NuxtLayout>
   </div>

@@ -1,34 +1,8 @@
 <template>
-  <div class="min-h-screen bg-surface-muted flex items-center justify-center p-4">
+  <div class="flex-1 bg-surface-muted flex items-center justify-center p-4 py-16">
     <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-      <!-- Navegação topo -->
-      <div class="flex items-center justify-between mb-6">
-        <NuxtLink
-          to="/"
-          class="flex items-center gap-1 text-sm text-gray-500 hover:text-brand-blue transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          Voltar
-        </NuxtLink>
-        <NuxtLink
-          to="/register"
-          class="text-sm font-medium text-brand-blue hover:underline"
-        >
-          Criar conta
-        </NuxtLink>
-      </div>
-
       <div class="mb-6 text-center">
-        <NuxtLink to="/">
-          <img
-            src="/logo.webp"
-            alt="Projeto Ser Luz"
-            class="h-16 mx-auto"
-          />
-        </NuxtLink>
-        <h1 class="text-2xl font-semibold text-brand-blue mt-4">Entrar</h1>
+        <h1 class="text-2xl font-semibold text-brand-blue">Entrar</h1>
       </div>
 
       <form novalidate @submit.prevent="handleLogin">
@@ -91,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: false })
+definePageMeta({ layout: 'default' })
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
