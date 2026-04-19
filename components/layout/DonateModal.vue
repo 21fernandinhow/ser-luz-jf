@@ -24,30 +24,29 @@
         </p>
 
         <div class="space-y-4">
-          <div v-if="pixKey" class="bg-surface-muted rounded-xl p-4">
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Chave Pix</p>
-            <p class="font-mono text-sm text-gray-800 break-all select-all">{{ pixKey }}</p>
+          <!-- QR Code -->
+          <div class="flex justify-center">
+            <img src="/qrcode-pix.png" alt="QR Code Pix" class="w-48 h-48 object-contain rounded-xl border border-gray-100" />
           </div>
 
-          <div v-if="bankInfo" class="bg-surface-muted rounded-xl p-4">
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Dados Bancários</p>
-            <p class="text-sm text-gray-800 whitespace-pre-line">{{ bankInfo }}</p>
+          <!-- Chave Pix + botão copiar -->
+          <div class="bg-surface-muted rounded-xl p-4">
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Chave Pix</p>
+            <p class="font-mono text-xs text-gray-800 break-all select-all mb-3">{{ pixKey }}</p>
+            <button
+              class="w-full flex items-center justify-center gap-2 bg-brand-blue text-white text-sm font-semibold py-2.5 rounded-lg hover:bg-brand-blue/90 transition"
+              @click="copyKey"
+            >
+              <svg v-if="!copied" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {{ copied ? 'Chave copiada!' : 'Copiar chave' }}
+            </button>
           </div>
-
-          <a
-            v-if="externalLink"
-            :href="externalLink"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block w-full text-center bg-brand-blue text-white font-semibold py-3 rounded-xl hover:bg-brand-blue/90 transition"
-          >
-            Acessar link de doação
-          </a>
         </div>
-
-        <p v-if="!pixKey && !bankInfo && !externalLink" class="text-sm text-gray-500 text-center">
-          Entre em contato com a ONG para obter informações sobre doações.
-        </p>
 
         <button
           class="mt-6 w-full border border-gray-200 text-gray-600 font-medium py-2.5 rounded-xl hover:bg-gray-50 transition"
@@ -63,8 +62,13 @@
 <script setup lang="ts">
 const { isOpen, close } = useDonateModal()
 
-// Preencher com os dados reais da ONG (Fase 7)
-const pixKey = ''
-const bankInfo = ''
-const externalLink = ''
+const pixKey = '00020126360014BR.GOV.BCB.PIX0114427123650001995204000053039865802BR5901N6001C62170513ProjetoSerLuz6304F832'
+
+const copied = ref(false)
+
+async function copyKey() {
+  await navigator.clipboard.writeText(pixKey)
+  copied.value = true
+  setTimeout(() => { copied.value = false }, 2500)
+}
 </script>
