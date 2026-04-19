@@ -7,16 +7,21 @@ export default defineEventHandler(async (event) => {
 
   const query = getQuery(event)
   const status = query.status as string | undefined
+  const neighborhood = query.neighborhood as string | undefined
 
   const supabase = useSupabaseAdmin()
   let q = supabase
     .from('profiles')
-    .select('id, email, full_name, phone, status, created_at')
+    .select('id, email, full_name, phone, status, neighborhood, created_at')
     .eq('role', 'beneficiary')
     .order('created_at', { ascending: false })
 
   if (status && ['pending', 'approved', 'rejected'].includes(status)) {
     q = q.eq('status', status)
+  }
+
+  if (neighborhood) {
+    q = q.eq('neighborhood', neighborhood)
   }
 
   const { data, error } = await q

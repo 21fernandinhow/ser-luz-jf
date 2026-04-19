@@ -17,6 +17,7 @@
           <tr class="border-b border-gray-200 text-left text-xs text-gray-500 font-semibold uppercase tracking-wide">
             <th class="pb-3 pr-4">Nome</th>
             <th class="pb-3 pr-4 hidden sm:table-cell">E-mail</th>
+            <th class="pb-3 pr-4 hidden lg:table-cell">Bairro</th>
             <th class="pb-3 pr-4">Status</th>
             <th class="pb-3 pr-4 hidden md:table-cell">Cadastro</th>
             <th class="pb-3" />
@@ -29,6 +30,9 @@
             </td>
             <td class="py-3 pr-4 text-gray-500 hidden sm:table-cell">
               {{ user.email }}
+            </td>
+            <td class="py-3 pr-4 text-gray-500 hidden lg:table-cell">
+              {{ user.neighborhood || '—' }}
             </td>
             <td class="py-3 pr-4">
               <span
@@ -66,6 +70,7 @@ interface UserRow {
   email: string
   full_name: string | null
   status: 'pending' | 'approved' | 'rejected'
+  neighborhood?: string | null
   created_at: string
 }
 

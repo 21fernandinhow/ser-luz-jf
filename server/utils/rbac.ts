@@ -12,8 +12,12 @@ export interface ProfileRow {
   created_at: string
   updated_at: string
   full_name: string | null
-  address: string | null
   phone: string | null
+  cep: string | null
+  neighborhood: string | null
+  street: string | null
+  address_number: string | null
+  complement: string | null
   document_id: string | null
   household_size: number | null
   has_children: boolean | null

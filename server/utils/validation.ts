@@ -11,7 +11,11 @@ export interface RegisterBeneficiaryInput {
   email: string
   password: string
   full_name: string
-  address: string
+  cep: string
+  neighborhood: string
+  street: string
+  address_number: string
+  complement?: string
   phone: string
   document_id: string
   household_size: number
@@ -56,11 +60,29 @@ export function validateRegisterBeneficiary(
   else if ((b.full_name as string).length > 150) {
     fieldErrors.full_name = 'Nome muito longo (máx. 150 caracteres).'
   }
-  if (!b.address || typeof b.address !== 'string' || !(b.address as string).trim()) {
-    fieldErrors.address = 'Endereço é obrigatório.'
+  if (!b.cep || typeof b.cep !== 'string' || !(b.cep as string).replace(/\D/g, '').match(/^\d{8}$/)) {
+    fieldErrors.cep = 'CEP inválido.'
   }
-  else if ((b.address as string).length > 300) {
-    fieldErrors.address = 'Endereço muito longo (máx. 300 caracteres).'
+  if (!b.neighborhood || typeof b.neighborhood !== 'string' || !(b.neighborhood as string).trim()) {
+    fieldErrors.neighborhood = 'Bairro é obrigatório.'
+  }
+  else if ((b.neighborhood as string).length > 100) {
+    fieldErrors.neighborhood = 'Bairro muito longo (máx. 100 caracteres).'
+  }
+  if (!b.street || typeof b.street !== 'string' || !(b.street as string).trim()) {
+    fieldErrors.street = 'Rua é obrigatória.'
+  }
+  else if ((b.street as string).length > 200) {
+    fieldErrors.street = 'Rua muito longa (máx. 200 caracteres).'
+  }
+  if (!b.address_number || typeof b.address_number !== 'string' || !(b.address_number as string).trim()) {
+    fieldErrors.address_number = 'Número é obrigatório.'
+  }
+  else if ((b.address_number as string).length > 20) {
+    fieldErrors.address_number = 'Número muito longo (máx. 20 caracteres).'
+  }
+  if (typeof b.complement === 'string' && (b.complement as string).length > 100) {
+    fieldErrors.complement = 'Complemento muito longo (máx. 100 caracteres).'
   }
   if (!b.phone || typeof b.phone !== 'string' || !(b.phone as string).trim()) {
     fieldErrors.phone = 'Telefone é obrigatório.'
@@ -112,7 +134,11 @@ export function validateRegisterBeneficiary(
       email: b.email as string,
       password: b.password as string,
       full_name: (b.full_name as string).trim(),
-      address: (b.address as string).trim(),
+      cep: (b.cep as string).replace(/\D/g, '').replace(/^(\d{5})(\d{3})$/, '$1-$2'),
+      neighborhood: (b.neighborhood as string).trim(),
+      street: (b.street as string).trim(),
+      address_number: (b.address_number as string).trim(),
+      complement: typeof b.complement === 'string' ? b.complement.trim() : undefined,
       phone: b.phone as string,
       document_id: (b.document_id as string).trim(),
       household_size: b.household_size as number,
@@ -194,7 +220,11 @@ const FORBIDDEN_ADMIN_PATCH_KEYS = ['id', 'email', 'role', 'status', 'created_at
 
 export interface AdminPatchInput {
   full_name?: string
-  address?: string
+  cep?: string
+  neighborhood?: string
+  street?: string
+  address_number?: string
+  complement?: string
   phone?: string
   document_id?: string
   household_size?: number
@@ -221,8 +251,14 @@ export function validateAdminPatch(body: unknown): Result<AdminPatchInput> {
   if (typeof sanitized.full_name === 'string' && sanitized.full_name.length > 150) {
     fieldErrors.full_name = 'Nome muito longo (máx. 150 caracteres).'
   }
-  if (typeof sanitized.address === 'string' && sanitized.address.length > 300) {
-    fieldErrors.address = 'Endereço muito longo (máx. 300 caracteres).'
+  if (typeof sanitized.street === 'string' && sanitized.street.length > 200) {
+    fieldErrors.street = 'Rua muito longa (máx. 200 caracteres).'
+  }
+  if (typeof sanitized.neighborhood === 'string' && sanitized.neighborhood.length > 100) {
+    fieldErrors.neighborhood = 'Bairro muito longo (máx. 100 caracteres).'
+  }
+  if (typeof sanitized.complement === 'string' && sanitized.complement.length > 100) {
+    fieldErrors.complement = 'Complemento muito longo (máx. 100 caracteres).'
   }
   if (
     sanitized.household_size !== undefined &&
@@ -250,7 +286,11 @@ const FORBIDDEN_PATCH_ME_KEYS = ['internal_notes', 'status', 'role', 'email', 'i
 
 export interface PatchMeInput {
   full_name?: string
-  address?: string
+  cep?: string
+  neighborhood?: string
+  street?: string
+  address_number?: string
+  complement?: string
   phone?: string
   document_id?: string
   household_size?: number

@@ -11,8 +11,12 @@ function serializeProfile(profile: ProfileRow, isAdmin: boolean) {
     status: profile.status,
     email: profile.email,
     full_name: profile.full_name,
-    address: profile.address,
     phone: profile.phone,
+    cep: profile.cep,
+    neighborhood: profile.neighborhood,
+    street: profile.street,
+    address_number: profile.address_number,
+    complement: profile.complement,
     document_id: profile.document_id,
     household_size: profile.household_size,
     has_children: profile.has_children,
@@ -46,8 +50,12 @@ export default defineEventHandler(async (event) => {
   const updateData: Record<string, unknown> = {}
 
   if (input.full_name !== undefined) updateData.full_name = input.full_name
-  if (input.address !== undefined) updateData.address = input.address
   if (input.phone !== undefined) updateData.phone = input.phone
+  if (input.cep !== undefined) updateData.cep = input.cep
+  if (input.neighborhood !== undefined) updateData.neighborhood = input.neighborhood
+  if (input.street !== undefined) updateData.street = input.street
+  if (input.address_number !== undefined) updateData.address_number = input.address_number
+  if (input.complement !== undefined) updateData.complement = input.complement
   if (input.document_id !== undefined) updateData.document_id = input.document_id
   if (input.household_size !== undefined) updateData.household_size = input.household_size
   if (input.has_children !== undefined) updateData.has_children = input.has_children

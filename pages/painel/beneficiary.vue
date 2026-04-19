@@ -64,14 +64,58 @@
                 <p class="mt-1 text-xs text-gray-400">O e-mail não pode ser alterado por aqui.</p>
               </div>
 
+              <!-- Endereço -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="p-cep" class="label-base">
+                    CEP <span class="text-red-500" aria-hidden="true">*</span>
+                  </label>
+                  <input id="p-cep" :value="form.cep" type="text" required autocomplete="postal-code"
+                    placeholder="00000-000" maxlength="9" :disabled="saving" class="input-base"
+                    :class="fieldErrors.cep ? 'border-red-400' : 'border-gray-300'"
+                    @input="form.cep = maskCEP(($event.target as HTMLInputElement).value)" />
+                  <p v-if="fieldErrors.cep" class="field-error">{{ fieldErrors.cep }}</p>
+                </div>
+
+                <div>
+                  <label for="p-neighborhood" class="label-base">
+                    Bairro <span class="text-red-500" aria-hidden="true">*</span>
+                  </label>
+                  <select id="p-neighborhood" v-model="form.neighborhood" required :disabled="saving"
+                    class="select-base" :class="fieldErrors.neighborhood ? 'border-red-400' : ''">
+                    <option value="">Selecione...</option>
+                    <option v-for="bairro in BAIRROS_JF" :key="bairro" :value="bairro">{{ bairro }}</option>
+                  </select>
+                  <p v-if="fieldErrors.neighborhood" class="field-error">{{ fieldErrors.neighborhood }}</p>
+                </div>
+              </div>
+
               <div>
-                <label for="p-address" class="label-base">
-                  Endereço <span class="text-red-500" aria-hidden="true">*</span>
+                <label for="p-street" class="label-base">
+                  Rua <span class="text-red-500" aria-hidden="true">*</span>
                 </label>
-                <input id="p-address" v-model="form.address" type="text" required autocomplete="street-address"
-                  maxlength="300" :disabled="saving" class="input-base"
-                  :class="fieldErrors.address ? 'border-red-400' : 'border-gray-300'" />
-                <p v-if="fieldErrors.address" class="field-error">{{ fieldErrors.address }}</p>
+                <input id="p-street" v-model="form.street" type="text" required autocomplete="street-address"
+                  maxlength="200" :disabled="saving" class="input-base"
+                  :class="fieldErrors.street ? 'border-red-400' : 'border-gray-300'" />
+                <p v-if="fieldErrors.street" class="field-error">{{ fieldErrors.street }}</p>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <div>
+                  <label for="p-number" class="label-base">
+                    Número <span class="text-red-500" aria-hidden="true">*</span>
+                  </label>
+                  <input id="p-number" v-model="form.address_number" type="text" required
+                    placeholder="123 ou S/N" maxlength="20" :disabled="saving" class="input-base"
+                    :class="fieldErrors.address_number ? 'border-red-400' : 'border-gray-300'" />
+                  <p v-if="fieldErrors.address_number" class="field-error">{{ fieldErrors.address_number }}</p>
+                </div>
+                <div class="col-span-2">
+                  <label for="p-complement" class="label-base">Complemento</label>
+                  <input id="p-complement" v-model="form.complement" type="text"
+                    placeholder="Apto, bloco, casa…" maxlength="100" :disabled="saving"
+                    class="input-base border-gray-300" />
+                </div>
               </div>
 
               <div class="grid grid-cols-2 gap-4">
@@ -178,8 +222,12 @@ interface Profile {
   status: 'pending' | 'approved' | 'rejected'
   email: string
   full_name: string | null
-  address: string | null
   phone: string | null
+  cep: string | null
+  neighborhood: string | null
+  street: string | null
+  address_number: string | null
+  complement: string | null
   document_id: string | null
   household_size: number | null
   has_children: boolean | null
@@ -199,8 +247,12 @@ const fieldErrors = ref<Record<string, string>>({})
 
 const form = reactive({
   full_name: '',
-  address: '',
   phone: '',
+  cep: '',
+  neighborhood: '',
+  street: '',
+  address_number: '',
+  complement: '',
   document_id: '',
   household_size: null as number | null,
   has_children: undefined as boolean | undefined,
@@ -214,8 +266,12 @@ const firstName = computed(() => profile.value?.full_name?.split(' ')[0] ?? 'usu
 
 function fillForm(p: Profile) {
   form.full_name = p.full_name ?? ''
-  form.address = p.address ?? ''
   form.phone = p.phone ?? ''
+  form.cep = p.cep ?? ''
+  form.neighborhood = p.neighborhood ?? ''
+  form.street = p.street ?? ''
+  form.address_number = p.address_number ?? ''
+  form.complement = p.complement ?? ''
   form.document_id = p.document_id ?? ''
   form.household_size = p.household_size ?? null
   form.has_children = p.has_children ?? undefined
@@ -223,6 +279,12 @@ function fillForm(p: Profile) {
   form.children_ages_description = p.children_ages_description ?? ''
   form.clothing_sizes = p.clothing_sizes ?? ''
   form.current_greatest_need = p.current_greatest_need ?? ''
+}
+
+function maskCEP(value: string): string {
+  const d = value.replace(/\D/g, '').slice(0, 8)
+  if (d.length <= 5) return d
+  return `${d.slice(0, 5)}-${d.slice(5)}`
 }
 
 function maskPhone(value: string): string {
@@ -265,8 +327,12 @@ async function handleSubmit() {
 
   const payload: Record<string, unknown> = {
     full_name: form.full_name,
-    address: form.address,
     phone: form.phone,
+    cep: form.cep,
+    neighborhood: form.neighborhood,
+    street: form.street,
+    address_number: form.address_number,
+    complement: form.complement || null,
   }
 
   if (form.document_id) payload.document_id = form.document_id

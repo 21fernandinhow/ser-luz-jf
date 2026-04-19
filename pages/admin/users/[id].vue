@@ -128,7 +128,11 @@ interface Profile {
   full_name: string | null
   phone: string | null
   document_id: string | null
-  address: string | null
+  cep: string | null
+  neighborhood: string | null
+  street: string | null
+  address_number: string | null
+  complement: string | null
   household_size: number | null
   has_children: boolean | null
   children_count: number | null

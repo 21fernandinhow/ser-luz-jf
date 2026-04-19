@@ -61,14 +61,59 @@
           <p v-if="fieldErrors.full_name" class="field-error">{{ fieldErrors.full_name }}</p>
         </div>
 
+        <!-- Endereço -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="b-cep" class="label-base">
+              CEP <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input id="b-cep" :value="form.cep" type="text" required autocomplete="postal-code"
+              placeholder="00000-000" maxlength="9" :disabled="loading" class="input-base"
+              :class="fieldErrors.cep ? 'border-red-400' : 'border-gray-300'"
+              @input="form.cep = maskCEP(($event.target as HTMLInputElement).value)" />
+            <p v-if="fieldErrors.cep" class="field-error">{{ fieldErrors.cep }}</p>
+          </div>
+
+          <div>
+            <label for="b-neighborhood" class="label-base">
+              Bairro <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <select id="b-neighborhood" v-model="form.neighborhood" required :disabled="loading"
+              class="select-base" :class="fieldErrors.neighborhood ? 'border-red-400' : ''">
+              <option value="">Selecione...</option>
+              <option v-for="bairro in BAIRROS_JF" :key="bairro" :value="bairro">{{ bairro }}</option>
+            </select>
+            <p v-if="fieldErrors.neighborhood" class="field-error">{{ fieldErrors.neighborhood }}</p>
+          </div>
+        </div>
+
         <div>
-          <label for="b-address" class="label-base">
-            Endereço <span class="text-red-500" aria-hidden="true">*</span>
+          <label for="b-street" class="label-base">
+            Rua <span class="text-red-500" aria-hidden="true">*</span>
           </label>
-          <input id="b-address" v-model="form.address" type="text" required autocomplete="street-address"
-            maxlength="300" :disabled="loading" class="input-base"
-            :class="fieldErrors.address ? 'border-red-400' : 'border-gray-300'" />
-          <p v-if="fieldErrors.address" class="field-error">{{ fieldErrors.address }}</p>
+          <input id="b-street" v-model="form.street" type="text" required autocomplete="street-address"
+            maxlength="200" :disabled="loading" class="input-base"
+            :class="fieldErrors.street ? 'border-red-400' : 'border-gray-300'" />
+          <p v-if="fieldErrors.street" class="field-error">{{ fieldErrors.street }}</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label for="b-number" class="label-base">
+              Número <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input id="b-number" v-model="form.address_number" type="text" required
+              placeholder="123 ou S/N" maxlength="20" :disabled="loading" class="input-base"
+              :class="fieldErrors.address_number ? 'border-red-400' : 'border-gray-300'" />
+            <p v-if="fieldErrors.address_number" class="field-error">{{ fieldErrors.address_number }}</p>
+          </div>
+
+          <div class="col-span-2">
+            <label for="b-complement" class="label-base">Complemento</label>
+            <input id="b-complement" v-model="form.complement" type="text"
+              placeholder="Apto, bloco, casa…" maxlength="100" :disabled="loading"
+              class="input-base border-gray-300" />
+          </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
@@ -188,7 +233,11 @@ const form = reactive({
   email: '',
   password: '',
   full_name: '',
-  address: '',
+  cep: '',
+  neighborhood: '',
+  street: '',
+  address_number: '',
+  complement: '',
   phone: '',
   document_id: '',
   household_size: null as number | null,
@@ -200,6 +249,12 @@ const form = reactive({
 })
 
 // ── Máscaras ──────────────────────────────────────────────────────────────────
+
+function maskCEP(value: string): string {
+  const d = value.replace(/\D/g, '').slice(0, 8)
+  if (d.length <= 5) return d
+  return `${d.slice(0, 5)}-${d.slice(5)}`
+}
 
 function maskPhone(value: string): string {
   const d = value.replace(/\D/g, '').slice(0, 11)
@@ -230,7 +285,10 @@ async function handleSubmit() {
     email: form.email,
     password: form.password,
     full_name: form.full_name,
-    address: form.address,
+    cep: form.cep,
+    neighborhood: form.neighborhood,
+    street: form.street,
+    address_number: form.address_number,
     phone: form.phone,
     document_id: form.document_id,
     household_size: form.household_size,
@@ -243,6 +301,7 @@ async function handleSubmit() {
     if (form.children_ages_description) payload.children_ages_description = form.children_ages_description
   }
 
+  if (form.complement) payload.complement = form.complement
   if (form.clothing_sizes) payload.clothing_sizes = form.clothing_sizes
 
   try {

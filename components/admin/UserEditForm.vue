@@ -48,18 +48,72 @@
         </div>
       </div>
 
-      <div v-if="profile.role === 'beneficiary'">
-        <label class="label-base">Endereço</label>
-        <input
-          v-model="form.address"
-          type="text"
-          maxlength="300"
-          :disabled="saving"
-          class="input-base"
-          :class="fieldErrors.address ? 'border-red-400' : 'border-gray-300'"
-        />
-        <p v-if="fieldErrors.address" class="field-error">{{ fieldErrors.address }}</p>
-      </div>
+      <template v-if="profile.role === 'beneficiary'">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="label-base">CEP</label>
+            <input
+              :value="form.cep"
+              type="text"
+              placeholder="00000-000"
+              maxlength="9"
+              :disabled="saving"
+              class="input-base"
+              :class="fieldErrors.cep ? 'border-red-400' : 'border-gray-300'"
+              @input="form.cep = maskCEP(($event.target as HTMLInputElement).value)"
+            />
+            <p v-if="fieldErrors.cep" class="field-error">{{ fieldErrors.cep }}</p>
+          </div>
+
+          <div>
+            <label class="label-base">Bairro</label>
+            <select v-model="form.neighborhood" :disabled="saving"
+              class="select-base" :class="fieldErrors.neighborhood ? 'border-red-400' : ''">
+              <option value="">Selecione...</option>
+              <option v-for="bairro in BAIRROS_JF" :key="bairro" :value="bairro">{{ bairro }}</option>
+            </select>
+            <p v-if="fieldErrors.neighborhood" class="field-error">{{ fieldErrors.neighborhood }}</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="label-base">Rua</label>
+          <input
+            v-model="form.street"
+            type="text"
+            maxlength="200"
+            :disabled="saving"
+            class="input-base"
+            :class="fieldErrors.street ? 'border-red-400' : 'border-gray-300'"
+          />
+          <p v-if="fieldErrors.street" class="field-error">{{ fieldErrors.street }}</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label class="label-base">Número</label>
+            <input
+              v-model="form.address_number"
+              type="text"
+              placeholder="123 ou S/N"
+              maxlength="20"
+              :disabled="saving"
+              class="input-base border-gray-300"
+            />
+          </div>
+          <div class="col-span-2">
+            <label class="label-base">Complemento</label>
+            <input
+              v-model="form.complement"
+              type="text"
+              placeholder="Apto, bloco, casa…"
+              maxlength="100"
+              :disabled="saving"
+              class="input-base border-gray-300"
+            />
+          </div>
+        </div>
+      </template>
     </fieldset>
 
     <!-- Beneficiary-specific -->
@@ -216,7 +270,11 @@ interface Profile {
   full_name: string | null
   phone: string | null
   document_id: string | null
-  address: string | null
+  cep: string | null
+  neighborhood: string | null
+  street: string | null
+  address_number: string | null
+  complement: string | null
   household_size: number | null
   has_children: boolean | null
   children_count: number | null
@@ -244,7 +302,11 @@ const form = reactive({
   full_name: '',
   phone: '',
   document_id: '',
-  address: '',
+  cep: '',
+  neighborhood: '',
+  street: '',
+  address_number: '',
+  complement: '',
   household_size: null as number | null,
   has_children: undefined as boolean | undefined,
   children_count: null as number | null,
@@ -261,7 +323,11 @@ function fillForm(p: Profile) {
   form.full_name = p.full_name ?? ''
   form.phone = p.phone ?? ''
   form.document_id = p.document_id ?? ''
-  form.address = p.address ?? ''
+  form.cep = p.cep ?? ''
+  form.neighborhood = p.neighborhood ?? ''
+  form.street = p.street ?? ''
+  form.address_number = p.address_number ?? ''
+  form.complement = p.complement ?? ''
   form.household_size = p.household_size ?? null
   form.has_children = p.has_children ?? undefined
   form.children_count = p.children_count ?? null
@@ -275,6 +341,12 @@ function fillForm(p: Profile) {
 }
 
 watch(() => props.profile, fillForm, { immediate: true })
+
+function maskCEP(value: string): string {
+  const d = value.replace(/\D/g, '').slice(0, 8)
+  if (d.length <= 5) return d
+  return `${d.slice(0, 5)}-${d.slice(5)}`
+}
 
 function maskPhone(value: string): string {
   const d = value.replace(/\D/g, '').slice(0, 11)
@@ -303,7 +375,11 @@ function handleSubmit() {
   }
 
   if (props.profile.role === 'beneficiary') {
-    data.address = form.address
+    data.cep = form.cep
+    data.neighborhood = form.neighborhood
+    data.street = form.street
+    data.address_number = form.address_number
+    data.complement = form.complement || null
     if (form.household_size != null) data.household_size = form.household_size
     if (form.has_children !== undefined) data.has_children = form.has_children
     if (form.current_greatest_need) data.current_greatest_need = form.current_greatest_need

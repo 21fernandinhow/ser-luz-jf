@@ -32,9 +32,15 @@ model Profile {
 
   // Campos compartilhados / beneficiário / voluntário (null conforme role)
   fullName  String? @map("full_name")
-  address   String?
   phone     String?
   documentId String? @map("document_id")
+
+  // Endereço (exclusivo beneficiário)
+  cep           String?
+  neighborhood  String?
+  street        String?
+  addressNumber String? @map("address_number")
+  complement    String?
 
   // Exclusivos beneficiário
   householdSize           Int?     @map("household_size")
