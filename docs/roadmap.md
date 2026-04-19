@@ -68,24 +68,25 @@ Plano por fases derivado da `spec.md`. Cada item é uma unidade de trabalho entr
 
 ---
 
-## Fase 5 — Admin
+## Fase 5 — Admin - Concluída
 
 **Objetivo:** admin lista, filtra, aprova/rejeita, edita e apaga usuários.
 
-- [ ] `server/api/admin/beneficiaries.get.ts` — lista `role=beneficiary`, query `?status=`
-- [ ] `server/api/admin/volunteers.get.ts` — idem volunteer
-- [ ] `server/api/admin/users/[id].get.ts` — detalhe completo incl. `internalNotes`
-- [ ] `server/api/admin/users/[id].patch.ts` — atualização ampla por admin
-- [ ] `server/api/admin/users/[id]/status.patch.ts` — `{ status: approved|rejected }` idempotente
-- [ ] `server/api/admin/users/[id].delete.ts` — Prisma delete + Supabase Auth `deleteUser`
-- [ ] `layouts/admin.vue` — nav lateral/top entre beneficiários e voluntários
-- [ ] `pages/admin/index.vue` — dashboard com contadores e links
-- [ ] `pages/admin/beneficiaries.vue` — tabela + filtro por status
-- [ ] `pages/admin/volunteers.vue` — idem
-- [ ] `pages/admin/users/[id].vue` — detalhe + edição + ação de status + delete com confirmação
-- [ ] `components/admin/UserTable.vue` — tabela reutilizável beneficiários/voluntários
-- [ ] `components/admin/StatusFilter.vue` — filtro por `pending|approved|rejected`
-- [ ] `components/admin/UserEditForm.vue` — formulário de edição com campos admin
+- [x] `server/api/admin/beneficiaries.get.ts` — lista `role=beneficiary`, query `?status=`
+- [x] `server/api/admin/volunteers.get.ts` — idem volunteer
+- [x] `server/api/admin/users/[id].get.ts` — detalhe completo incl. `internalNotes`
+- [x] `server/api/admin/users/[id].patch.ts` — atualização ampla por admin
+- [x] `server/api/admin/users/[id]/status.patch.ts` — `{ status: approved|rejected }` idempotente
+- [x] `server/api/admin/users/[id].delete.ts` — Supabase delete profiles + Auth `deleteUser`
+- [x] `layouts/admin.vue` — nav top entre beneficiários e voluntários
+- [x] `pages/admin/index.vue` — dashboard com contadores e links
+- [x] `pages/admin/beneficiaries.vue` — tabela + filtro por status
+- [x] `pages/admin/volunteers.vue` — idem
+- [x] `pages/admin/users/[id].vue` — detalhe + edição + ação de status + delete com confirmação
+- [x] `components/admin/UserTable.vue` — tabela reutilizável beneficiários/voluntários
+- [x] `components/admin/StatusFilter.vue` — filtro por `pending|approved|rejected`
+- [x] `components/admin/UserEditForm.vue` — formulário de edição com campos admin
+- [x] `server/api/admin/stats.get.ts` — contadores por role/status para o dashboard
 
 ---
 

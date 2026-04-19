@@ -186,6 +186,61 @@ export function validateRegisterVolunteer(
   }
 }
 
+// ---------- PATCH /api/admin/users/:id ----------
+
+const FORBIDDEN_ADMIN_PATCH_KEYS = ['id', 'email', 'role', 'status', 'created_at', 'updated_at']
+
+export interface AdminPatchInput {
+  full_name?: string
+  address?: string
+  phone?: string
+  document_id?: string
+  household_size?: number
+  has_children?: boolean
+  children_count?: number
+  children_ages_description?: string
+  clothing_sizes?: string
+  current_greatest_need?: string
+  availability?: string
+  skills?: string
+  internal_notes?: string
+}
+
+export function validateAdminPatch(body: unknown): Result<AdminPatchInput> {
+  const b = body as Record<string, unknown>
+  const fieldErrors: Record<string, string> = {}
+
+  const sanitized: Record<string, unknown> = {}
+  for (const [k, v] of Object.entries(b)) {
+    if (!FORBIDDEN_ADMIN_PATCH_KEYS.includes(k)) sanitized[k] = v
+  }
+
+  if (typeof sanitized.full_name === 'string' && sanitized.full_name.length > 150) {
+    fieldErrors.full_name = 'Nome muito longo (máx. 150 caracteres).'
+  }
+  if (typeof sanitized.address === 'string' && sanitized.address.length > 300) {
+    fieldErrors.address = 'Endereço muito longo (máx. 300 caracteres).'
+  }
+  if (
+    sanitized.household_size !== undefined &&
+    (typeof sanitized.household_size !== 'number' || (sanitized.household_size as number) < 1)
+  ) {
+    fieldErrors.household_size = 'Tamanho do domicílio deve ser ao menos 1.'
+  }
+  if (
+    sanitized.children_count !== undefined &&
+    (typeof sanitized.children_count !== 'number' || (sanitized.children_count as number) < 1)
+  ) {
+    fieldErrors.children_count = 'Informe o número de crianças.'
+  }
+  if (typeof sanitized.internal_notes === 'string' && sanitized.internal_notes.length > 2000) {
+    fieldErrors.internal_notes = 'Notas muito longas (máx. 2000 caracteres).'
+  }
+
+  if (Object.keys(fieldErrors).length > 0) return { ok: false, fieldErrors }
+  return { ok: true, data: sanitized as AdminPatchInput }
+}
+
 // ---------- PATCH /api/profiles/me ----------
 
 const FORBIDDEN_PATCH_ME_KEYS = ['internal_notes', 'status', 'role', 'email', 'id']
