@@ -23,6 +23,7 @@ export interface ProfileRow {
   current_greatest_need: string | null
   availability: string | null
   skills: string | null
+  has_car: boolean
 }
 
 export async function requireProfile(event: H3Event): Promise<ProfileRow> {

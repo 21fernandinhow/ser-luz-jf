@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
   const { data: existing, error: findError } = await supabase
     .from('profiles')
-    .select('id')
+    .select('id, role')
     .eq('id', id)
     .single()
 
@@ -35,9 +35,12 @@ export default defineEventHandler(async (event) => {
     return { data: profile }
   }
 
+  const patch = { ...validation.data }
+  if (existing.role !== 'volunteer') delete patch.has_car
+
   const { data: updated, error } = await supabase
     .from('profiles')
-    .update(validation.data)
+    .update(patch)
     .eq('id', id)
     .select()
     .single()

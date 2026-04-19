@@ -29,6 +29,7 @@ export interface RegisterVolunteerInput {
   phone: string
   availability: string
   skills: string
+  has_car: boolean
 }
 
 export function validateRegisterBeneficiary(
@@ -182,6 +183,7 @@ export function validateRegisterVolunteer(
       phone: b.phone as string,
       availability: (b.availability as string).trim(),
       skills: (b.skills as string).trim(),
+      has_car: b.has_car === true,
     },
   }
 }
@@ -203,6 +205,7 @@ export interface AdminPatchInput {
   current_greatest_need?: string
   availability?: string
   skills?: string
+  has_car?: boolean
   internal_notes?: string
 }
 
@@ -258,6 +261,7 @@ export interface PatchMeInput {
   current_greatest_need?: string
   availability?: string
   skills?: string
+  has_car?: boolean
 }
 
 export function validatePatchMe(body: unknown): Result<PatchMeInput> {

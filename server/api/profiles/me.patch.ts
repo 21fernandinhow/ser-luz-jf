@@ -57,6 +57,7 @@ export default defineEventHandler(async (event) => {
   if (input.current_greatest_need !== undefined) updateData.current_greatest_need = input.current_greatest_need
   if (input.availability !== undefined) updateData.availability = input.availability
   if (input.skills !== undefined) updateData.skills = input.skills
+  if (input.has_car !== undefined && profile.role === 'volunteer') updateData.has_car = input.has_car
 
   if (Object.keys(updateData).length === 0) {
     return { data: serializeProfile(profile, profile.role === 'admin') }

@@ -173,6 +173,17 @@
             class="textarea-base border-gray-300"
           />
         </div>
+
+        <div class="flex items-center gap-3">
+          <input
+            id="ef-has-car"
+            v-model="form.has_car"
+            type="checkbox"
+            :disabled="saving"
+            class="h-4 w-4 rounded border-gray-300 text-brand-blue focus:ring-brand-blue"
+          />
+          <label for="ef-has-car" class="label-base mb-0 cursor-pointer">Tem carro disponível</label>
+        </div>
       </fieldset>
     </template>
 
@@ -214,6 +225,7 @@ interface Profile {
   current_greatest_need: string | null
   availability: string | null
   skills: string | null
+  has_car: boolean
   internal_notes: string | null
 }
 
@@ -241,6 +253,7 @@ const form = reactive({
   current_greatest_need: '',
   availability: '',
   skills: '',
+  has_car: false,
   internal_notes: '',
 })
 
@@ -257,6 +270,7 @@ function fillForm(p: Profile) {
   form.current_greatest_need = p.current_greatest_need ?? ''
   form.availability = p.availability ?? ''
   form.skills = p.skills ?? ''
+  form.has_car = p.has_car ?? false
   form.internal_notes = p.internal_notes ?? ''
 }
 
@@ -303,6 +317,7 @@ function handleSubmit() {
   if (props.profile.role === 'volunteer') {
     if (form.availability) data.availability = form.availability
     if (form.skills) data.skills = form.skills
+    data.has_car = form.has_car
   }
 
   emit('submit', data)

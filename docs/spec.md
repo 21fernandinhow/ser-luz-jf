@@ -181,6 +181,7 @@ model Profile {
 
   availability String?
   skills       String?
+  hasCar       Boolean @default(false) @map("has_car")
 
   @@index([role])
   @@index([status])

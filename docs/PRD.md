@@ -227,6 +227,7 @@ Implementação: **middleware** Nuxt + **server routes** validando JWT Supabase 
 - `phone` text, nullable
 - `availability` text, nullable
 - `skills` text, nullable
+- `has_car` boolean, default false — UI: "Tenho carro disponível" (checkbox)
 
 *(Demais colunas da ficha do beneficiário ficam `null` para voluntários; opcionalmente validar no app que não se enviam no cadastro volunteer.)*
 

@@ -98,6 +98,17 @@
             class="textarea-base" :class="fieldErrors.skills ? 'border-red-400' : 'border-gray-300'" />
           <p v-if="fieldErrors.skills" class="field-error">{{ fieldErrors.skills }}</p>
         </div>
+
+        <div class="flex items-center gap-3">
+          <input
+            id="v-has-car"
+            v-model="form.has_car"
+            type="checkbox"
+            :disabled="loading"
+            class="h-4 w-4 rounded border-gray-300 text-brand-blue focus:ring-brand-blue"
+          />
+          <label for="v-has-car" class="label-base mb-0 cursor-pointer">Tenho carro disponível</label>
+        </div>
       </fieldset>
 
       <button type="submit" :disabled="loading" class="btn-primary">
@@ -120,6 +131,7 @@ const form = reactive({
   phone: '',
   availability: '',
   skills: '',
+  has_car: false,
 })
 
 function maskPhone(value: string): string {
@@ -146,6 +158,7 @@ async function handleSubmit() {
         phone: form.phone,
         availability: form.availability,
         skills: form.skills,
+        has_car: form.has_car,
       },
     })
     success.value = true

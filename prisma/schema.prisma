@@ -47,6 +47,7 @@ model Profile {
   // Exclusivos voluntário
   availability String?
   skills       String?
+  hasCar       Boolean  @default(false) @map("has_car")
 
   @@index([role])
   @@index([status])
