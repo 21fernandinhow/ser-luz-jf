@@ -1,6 +1,6 @@
 # Projeto Ser Luz — Sistema Web
 
-Site oficial: **[ser-luz-jf.vercel.app](https://ser-luz-jf.vercel.app)**
+Site oficial: **[https://www.serluzjf.org](https://www.serluzjf.org)**
 
 Sistema web institucional e operacional da ONG **Projeto Ser Luz**, desenvolvido para facilitar o cadastro de beneficiários e voluntários, a gestão interna pela equipe da ONG e a presença digital da instituição.
 
