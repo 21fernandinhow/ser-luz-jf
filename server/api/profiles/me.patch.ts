@@ -20,6 +20,7 @@ function serializeProfile(profile: ProfileRow, isAdmin: boolean) {
     document_id: profile.document_id,
     household_size: profile.household_size,
     has_children: profile.has_children,
+    has_elderly: profile.has_elderly,
     children_count: profile.children_count,
     children_ages_description: profile.children_ages_description,
     clothing_sizes: profile.clothing_sizes,
@@ -59,6 +60,7 @@ export default defineEventHandler(async (event) => {
   if (input.document_id !== undefined) updateData.document_id = input.document_id
   if (input.household_size !== undefined) updateData.household_size = input.household_size
   if (input.has_children !== undefined) updateData.has_children = input.has_children
+  if (input.has_elderly !== undefined) updateData.has_elderly = input.has_elderly
   if (input.children_count !== undefined) updateData.children_count = input.children_count
   if (input.children_ages_description !== undefined) updateData.children_ages_description = input.children_ages_description
   if (input.clothing_sizes !== undefined) updateData.clothing_sizes = input.clothing_sizes

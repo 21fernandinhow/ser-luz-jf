@@ -164,6 +164,12 @@
                 </div>
               </div>
 
+              <div class="flex items-center gap-3">
+                <input id="p-has-elderly" v-model="form.has_elderly" type="checkbox" :disabled="saving"
+                  class="h-4 w-4 rounded border-gray-300 text-brand-blue focus:ring-brand-blue" />
+                <label for="p-has-elderly" class="label-base mb-0 cursor-pointer">Possui idoso na casa?</label>
+              </div>
+
               <template v-if="form.has_children === true">
                 <div class="grid grid-cols-2 gap-4">
                   <div>
@@ -231,6 +237,7 @@ interface Profile {
   document_id: string | null
   household_size: number | null
   has_children: boolean | null
+  has_elderly: boolean | null
   children_count: number | null
   children_ages_description: string | null
   clothing_sizes: string | null
@@ -256,6 +263,7 @@ const form = reactive({
   document_id: '',
   household_size: null as number | null,
   has_children: undefined as boolean | undefined,
+  has_elderly: false,
   children_count: null as number | null,
   children_ages_description: '',
   clothing_sizes: '',
@@ -275,6 +283,7 @@ function fillForm(p: Profile) {
   form.document_id = p.document_id ?? ''
   form.household_size = p.household_size ?? null
   form.has_children = p.has_children ?? undefined
+  form.has_elderly = p.has_elderly ?? false
   form.children_count = p.children_count ?? null
   form.children_ages_description = p.children_ages_description ?? ''
   form.clothing_sizes = p.clothing_sizes ?? ''
@@ -338,6 +347,7 @@ async function handleSubmit() {
   if (form.document_id) payload.document_id = form.document_id
   if (form.household_size != null) payload.household_size = form.household_size
   if (form.has_children !== undefined) payload.has_children = form.has_children
+  payload.has_elderly = form.has_elderly
   if (form.current_greatest_need) payload.current_greatest_need = form.current_greatest_need
   if (form.clothing_sizes) payload.clothing_sizes = form.clothing_sizes
 

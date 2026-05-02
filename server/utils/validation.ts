@@ -20,6 +20,7 @@ export interface RegisterBeneficiaryInput {
   document_id: string
   household_size: number
   has_children: boolean
+  has_elderly: boolean
   current_greatest_need: string
   children_count?: number
   children_ages_description?: string
@@ -106,6 +107,9 @@ export function validateRegisterBeneficiary(
   if (typeof b.has_children !== 'boolean') {
     fieldErrors.has_children = 'Informe se há crianças.'
   }
+  if (typeof b.has_elderly !== 'boolean') {
+    fieldErrors.has_elderly = 'Informe se há idoso na casa.'
+  }
   if (!b.current_greatest_need || typeof b.current_greatest_need !== 'string' || !(b.current_greatest_need as string).trim()) {
     fieldErrors.current_greatest_need = 'Informe a maior necessidade no momento.'
   }
@@ -144,6 +148,7 @@ export function validateRegisterBeneficiary(
       document_id: (b.document_id as string).trim(),
       household_size: b.household_size as number,
       has_children: b.has_children as boolean,
+      has_elderly: b.has_elderly as boolean,
       current_greatest_need: (b.current_greatest_need as string).trim(),
       children_count: typeof b.children_count === 'number' ? b.children_count : undefined,
       children_ages_description:
@@ -234,6 +239,7 @@ export interface AdminPatchInput {
   document_id?: string
   household_size?: number
   has_children?: boolean
+  has_elderly?: boolean
   children_count?: number
   children_ages_description?: string
   clothing_sizes?: string
@@ -300,6 +306,7 @@ export interface PatchMeInput {
   document_id?: string
   household_size?: number
   has_children?: boolean
+  has_elderly?: boolean
   children_count?: number
   children_ages_description?: string
   clothing_sizes?: string

@@ -172,6 +172,12 @@
           </div>
         </div>
 
+        <div class="flex items-center gap-3">
+          <input id="b-has-elderly" v-model="form.has_elderly" type="checkbox" :disabled="loading"
+            class="h-4 w-4 rounded border-gray-300 text-brand-blue focus:ring-brand-blue" />
+          <label for="b-has-elderly" class="label-base mb-0 cursor-pointer">Possui idoso na casa?</label>
+        </div>
+
         <template v-if="form.has_children === 'true'">
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -242,6 +248,7 @@ const form = reactive({
   document_id: '',
   household_size: null as number | null,
   has_children: '',
+  has_elderly: false,
   children_count: null as number | null,
   children_ages_description: '',
   clothing_sizes: '',
@@ -293,6 +300,7 @@ async function handleSubmit() {
     document_id: form.document_id,
     household_size: form.household_size,
     has_children: form.has_children === 'true' ? true : form.has_children === 'false' ? false : undefined,
+    has_elderly: form.has_elderly,
     current_greatest_need: form.current_greatest_need,
   }
 

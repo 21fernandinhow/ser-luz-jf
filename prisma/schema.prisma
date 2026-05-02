@@ -45,6 +45,7 @@ model Profile {
   // Exclusivos beneficiário
   householdSize           Int?     @map("household_size")
   hasChildren             Boolean? @map("has_children")
+  hasElderly              Boolean? @map("has_elderly")
   childrenCount           Int?     @map("children_count")
   childrenAgesDescription String?  @map("children_ages_description")
   clothingSizes           String?  @map("clothing_sizes")

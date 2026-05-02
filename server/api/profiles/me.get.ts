@@ -17,6 +17,7 @@ function serializeProfile(profile: ProfileRow, isAdmin: boolean) {
     document_id: profile.document_id,
     household_size: profile.household_size,
     has_children: profile.has_children,
+    has_elderly: profile.has_elderly,
     children_count: profile.children_count,
     children_ages_description: profile.children_ages_description,
     clothing_sizes: profile.clothing_sizes,
