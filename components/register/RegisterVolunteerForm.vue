@@ -71,6 +71,17 @@
             @input="form.phone = maskPhone(($event.target as HTMLInputElement).value)" />
           <p v-if="fieldErrors.phone" class="field-error">{{ fieldErrors.phone }}</p>
         </div>
+
+        <div>
+          <label for="v-document-id" class="label-base">
+            CPF ou RG <span class="text-red-500" aria-hidden="true">*</span>
+          </label>
+          <input id="v-document-id" :value="form.document_id" type="text" required autocomplete="off"
+            placeholder="000.000.000-00" maxlength="18" :disabled="loading" class="input-base"
+            :class="fieldErrors.document_id ? 'border-red-400' : 'border-gray-300'"
+            @input="form.document_id = maskCPF(($event.target as HTMLInputElement).value)" />
+          <p v-if="fieldErrors.document_id" class="field-error">{{ fieldErrors.document_id }}</p>
+        </div>
       </fieldset>
 
       <hr class="border-gray-100" />
@@ -129,10 +140,19 @@ const form = reactive({
   password: '',
   full_name: '',
   phone: '',
+  document_id: '',
   availability: '',
   skills: '',
   has_car: false,
 })
+
+function maskCPF(value: string): string {
+  const d = value.replace(/\D/g, '').slice(0, 11)
+  if (d.length <= 3) return d
+  if (d.length <= 6) return `${d.slice(0, 3)}.${d.slice(3)}`
+  if (d.length <= 9) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`
+  return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`
+}
 
 function maskPhone(value: string): string {
   const d = value.replace(/\D/g, '').slice(0, 11)
@@ -156,6 +176,7 @@ async function handleSubmit() {
         password: form.password,
         full_name: form.full_name,
         phone: form.phone,
+        document_id: form.document_id,
         availability: form.availability,
         skills: form.skills,
         has_car: form.has_car,

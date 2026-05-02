@@ -31,6 +31,7 @@ export interface RegisterVolunteerInput {
   password: string
   full_name: string
   phone: string
+  document_id: string
   availability: string
   skills: string
   has_car: boolean
@@ -185,6 +186,9 @@ export function validateRegisterVolunteer(
       fieldErrors.phone = 'Telefone inválido.'
     }
   }
+  if (!b.document_id || typeof b.document_id !== 'string' || !(b.document_id as string).trim()) {
+    fieldErrors.document_id = 'CPF ou RG é obrigatório.'
+  }
   if (!b.availability || typeof b.availability !== 'string' || !(b.availability as string).trim()) {
     fieldErrors.availability = 'Disponibilidade é obrigatória.'
   }
@@ -207,6 +211,7 @@ export function validateRegisterVolunteer(
       password: b.password as string,
       full_name: (b.full_name as string).trim(),
       phone: b.phone as string,
+      document_id: (b.document_id as string).trim(),
       availability: (b.availability as string).trim(),
       skills: (b.skills as string).trim(),
       has_car: b.has_car === true,
