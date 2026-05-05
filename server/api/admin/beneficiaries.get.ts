@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const supabase = useSupabaseAdmin()
   let q = supabase
     .from('profiles')
-    .select('id, email, full_name, phone, status, neighborhood, created_at')
+    .select('id, email, full_name, phone, neighborhood, cep, street, address_number, complement, status, created_at')
     .eq('role', 'beneficiary')
     .order('created_at', { ascending: false })
 

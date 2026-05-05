@@ -17,7 +17,12 @@
           <tr class="border-b border-gray-200 text-left text-xs text-gray-500 font-semibold uppercase tracking-wide">
             <th class="pb-3 pr-4">Nome</th>
             <th class="pb-3 pr-4">E-mail</th>
+            <th v-if="showPhone" class="pb-3 pr-4">Telefone</th>
             <th class="pb-3 pr-4">Bairro</th>
+            <th v-if="showAddress" class="pb-3 pr-4">CEP</th>
+            <th v-if="showAddress" class="pb-3 pr-4">Rua</th>
+            <th v-if="showAddress" class="pb-3 pr-4">Número</th>
+            <th v-if="showAddress" class="pb-3 pr-4">Complemento</th>
             <th class="pb-3 pr-4">Status</th>
             <th class="pb-3 pr-4">Cadastro</th>
             <th class="pb-3" />
@@ -36,8 +41,23 @@
             <td class="py-3 pr-4 text-gray-500">
               {{ user.email }}
             </td>
+            <td v-if="showPhone" class="py-3 pr-4 text-gray-500">
+              {{ user.phone || '—' }}
+            </td>
             <td class="py-3 pr-4 text-gray-500">
               {{ user.neighborhood || '—' }}
+            </td>
+            <td v-if="showAddress" class="py-3 pr-4 text-gray-500">
+              {{ user.cep || '—' }}
+            </td>
+            <td v-if="showAddress" class="py-3 pr-4 text-gray-500">
+              {{ user.street || '—' }}
+            </td>
+            <td v-if="showAddress" class="py-3 pr-4 text-gray-500">
+              {{ user.address_number || '—' }}
+            </td>
+            <td v-if="showAddress" class="py-3 pr-4 text-gray-500">
+              {{ user.complement || '—' }}
             </td>
             <td class="py-3 pr-4">
               <span
@@ -54,7 +74,7 @@
             <td class="py-3 pr-4 text-gray-500">
               {{ formatDate(user.created_at) }}
             </td>
-            <td class="py-3 text-right" @click.stop>
+            <td class="py-3 pl-6 text-right whitespace-nowrap" @click.stop>
               <NuxtLink
                 :to="`/admin/users/${user.id}`"
                 class="text-brand-blue hover:underline text-xs font-medium"
@@ -76,10 +96,20 @@ interface UserRow {
   full_name: string | null
   status: 'pending' | 'approved' | 'rejected'
   neighborhood?: string | null
+  phone?: string | null
+  cep?: string | null
+  street?: string | null
+  address_number?: string | null
+  complement?: string | null
   created_at: string
 }
 
-defineProps<{ users: UserRow[]; loading?: boolean }>()
+defineProps<{
+  users: UserRow[]
+  loading?: boolean
+  showPhone?: boolean
+  showAddress?: boolean
+}>()
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('pt-BR')
