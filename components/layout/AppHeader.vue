@@ -36,7 +36,7 @@
           :to="entrarPath"
           class="bg-white text-brand-blue font-semibold text-sm px-4 py-2 rounded-full hover:bg-blue-50 transition"
         >
-          Entrar
+          {{ user ? 'Painel' : 'Entrar' }}
         </NuxtLink>
       </nav>
     </div>
