@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-30 bg-brand-blue">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <NuxtLink to="/" class="flex items-center gap-2 shrink-0">
+      <NuxtLink to="/" class="flex items-center gap-2 shrink-0 transition-transform duration-200 hover:scale-110">
         <img
           v-if="!logoError"
           src="/logo.webp"

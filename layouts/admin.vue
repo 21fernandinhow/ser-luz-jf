@@ -4,7 +4,7 @@
       <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         <!-- Logo + título -->
         <div class="flex items-center gap-3 shrink-0">
-          <NuxtLink to="/" class="flex items-center gap-2">
+          <NuxtLink to="/" class="flex items-center gap-2 transition-transform duration-200 hover:scale-110">
             <img
               v-if="!logoError"
               src="/logo.webp"
